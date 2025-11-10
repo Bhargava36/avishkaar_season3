@@ -1,0 +1,109 @@
+/* 🔹 General glitch base */
+.glitch-base {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .glitch-base::before,
+  .glitch-base::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: inherit;
+    background: inherit;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    content: attr(data-text);
+  }
+  
+  /* 🔹 About Card Glitch */
+  .glitch-about::before {
+    left: 2px;
+    text-shadow: -2px 0 cyan;
+    animation: glitchAboutTop 2s infinite linear alternate-reverse;
+  }
+  
+  .glitch-about::after {
+    left: -2px;
+    text-shadow: -2px 0 magenta;
+    animation: glitchAboutBottom 2s infinite linear alternate-reverse;
+  }
+  
+  @keyframes glitchAboutTop {
+    0% { clip: rect(0, 9999px, 0, 0); }
+    20% { clip: rect(10px, 9999px, 50px, 0); }
+    40% { clip: rect(40px, 9999px, 90px, 0); }
+    60% { clip: rect(20px, 9999px, 70px, 0); }
+    80% { clip: rect(60px, 9999px, 100px, 0); }
+    100% { clip: rect(0, 9999px, 30px, 0); }
+  }
+  
+  @keyframes glitchAboutBottom {
+    0% { clip: rect(50px, 9999px, 100px, 0); }
+    25% { clip: rect(20px, 9999px, 60px, 0); }
+    50% { clip: rect(0, 9999px, 40px, 0); }
+    75% { clip: rect(30px, 9999px, 80px, 0); }
+    100% { clip: rect(10px, 9999px, 50px, 0); }
+  }
+  
+  /* 🔹 Timeline Card Glitch */
+  .glitch-timeline::before {
+    left: 2px;
+    text-shadow: -2px 0 lime;
+    animation: glitchTimelineTop 2.5s infinite linear alternate-reverse;
+  }
+  
+  .glitch-timeline::after {
+    left: -2px;
+    text-shadow: -2px 0 orange;
+    animation: glitchTimelineBottom 2.5s infinite linear alternate-reverse;
+  }
+  
+  @keyframes glitchTimelineTop {
+    0% { clip: rect(0, 9999px, 10px, 0); }
+    20% { clip: rect(30px, 9999px, 70px, 0); }
+    40% { clip: rect(10px, 9999px, 60px, 0); }
+    60% { clip: rect(40px, 9999px, 90px, 0); }
+    80% { clip: rect(0, 9999px, 40px, 0); }
+    100% { clip: rect(20px, 9999px, 100px, 0); }
+  }
+  
+  @keyframes glitchTimelineBottom {
+    0% { clip: rect(50px, 9999px, 100px, 0); }
+    25% { clip: rect(20px, 9999px, 70px, 0); }
+    50% { clip: rect(0, 9999px, 30px, 0); }
+    75% { clip: rect(40px, 9999px, 90px, 0); }
+    100% { clip: rect(10px, 9999px, 60px, 0); }
+  }
+  
+  /* 🔹 Organizer Card Glitch */
+  .glitch-organizer::before {
+    left: 1px;
+    text-shadow: -2px 0 #00f6ff;
+    animation: glitchOrganizerTop 3s infinite linear alternate-reverse;
+  }
+  
+  .glitch-organizer::after {
+    left: -1px;
+    text-shadow: -2px 0 #ff00a0;
+    animation: glitchOrganizerBottom 3s infinite linear alternate-reverse;
+  }
+  
+  @keyframes glitchOrganizerTop {
+    0% { clip: rect(0, 9999px, 15px, 0); }
+    25% { clip: rect(20px, 9999px, 50px, 0); }
+    50% { clip: rect(40px, 9999px, 90px, 0); }
+    75% { clip: rect(10px, 9999px, 70px, 0); }
+    100% { clip: rect(0, 9999px, 30px, 0); }
+  }
+  
+  @keyframes glitchOrganizerBottom {
+    0% { clip: rect(60px, 9999px, 100px, 0); }
+    25% { clip: rect(30px, 9999px, 70px, 0); }
+    50% { clip: rect(0, 9999px, 40px, 0); }
+    75% { clip: rect(20px, 9999px, 80px, 0); }
+    100% { clip: rect(10px, 9999px, 50px, 0); }
+  }
+  

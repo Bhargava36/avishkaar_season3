@@ -1,0 +1,52 @@
+/* Apply glitch effect only when hovered */
+.glitch-card:hover .glitch-text {
+    position: relative;
+    animation: glitch-skew 1s infinite linear alternate-reverse;
+  }
+  
+  .glitch-card:hover .glitch-text::before,
+  .glitch-card:hover .glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    clip: rect(0, 900px, 0, 0);
+  }
+  
+  .glitch-card:hover .glitch-text::before {
+    left: 2px;
+    text-shadow: -2px 0 #06b6d4; /* cyan glitch */
+    animation: glitchTop 2s infinite linear alternate-reverse;
+  }
+  
+  .glitch-card:hover .glitch-text::after {
+    left: -2px;
+    text-shadow: -2px 0 #a855f7; /* purple glitch */
+    animation: glitchBottom 2s infinite linear alternate-reverse;
+  }
+  
+  @keyframes glitchTop {
+    0% { clip: rect(0, 9999px, 0, 0); }
+    20% { clip: rect(5px, 9999px, 20px, 0); }
+    40% { clip: rect(10px, 9999px, 15px, 0); }
+    60% { clip: rect(20px, 9999px, 25px, 0); }
+    80% { clip: rect(15px, 9999px, 30px, 0); }
+    100% { clip: rect(25px, 9999px, 35px, 0); }
+  }
+  
+  @keyframes glitchBottom {
+    0% { clip: rect(0, 9999px, 0, 0); }
+    20% { clip: rect(10px, 9999px, 25px, 0); }
+    40% { clip: rect(20px, 9999px, 35px, 0); }
+    60% { clip: rect(30px, 9999px, 45px, 0); }
+    80% { clip: rect(15px, 9999px, 40px, 0); }
+    100% { clip: rect(25px, 9999px, 50px, 0); }
+  }
+  
+  @keyframes glitch-skew {
+    0% { transform: skew(0deg); }
+    50% { transform: skew(2deg); }
+    100% { transform: skew(-2deg); }
+  }
+  

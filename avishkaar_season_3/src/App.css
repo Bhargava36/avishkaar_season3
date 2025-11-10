@@ -1,0 +1,45 @@
+.glitch-text {
+    position: relative;
+    color: #7a7979;
+    font-size: clamp(1rem, 5vw, 3rem);
+    font-weight: 700;
+    font-family: "Orbitron", sans-serif;
+    user-select: none;
+    transition: color 0.3s ease;
+  }
+  
+  .glitch-text::after,
+  .glitch-text::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #fff;
+    background: transparent;
+    overflow: hidden;
+    clip-path: inset(0 0 0 0);
+    opacity: 0;
+  }
+  
+  /* Hover Glitch Effect */
+  .glitch-hover-text:hover::after {
+    left: 0px;
+    text-shadow: -2px 0 cyan;
+    animation: glitch-anim 0.6s infinite linear alternate-reverse;
+    opacity: 1;
+  }
+  .glitch-hover-text:hover::before {
+    left: -4px;
+    text-shadow: 2px 0 purple;
+    animation: glitch-anim 0.6s infinite linear alternate-reverse;
+    opacity: 1;
+  }
+  
+  @keyframes glitch-anim {
+    0%   { clip-path: inset(20% 0 50% 0); }
+    25%  { clip-path: inset(10% 0 60% 0); }
+    50%  { clip-path: inset(30% 0 40% 0); }
+    75%  { clip-path: inset(15% 0 55% 0); }
+    100% { clip-path: inset(25% 0 35% 0); }
+  }
+  
