@@ -1,0 +1,13 @@
+const express = require("express");
+const {saveMemberCount, getTeamById,registerTeam, loginTeam, verifyOtp, resendOtp, forgotPassword, resetPassword,getAllTeams} = require("../controllers/TeamController");
+const router = express.Router();
+router.get("/", getAllTeams);
+router.get("/:teamId", getTeamById);
+router.post("/register", registerTeam);
+router.post("/membercount", saveMemberCount);
+router.post("/login", loginTeam);
+router.post("/verify", verifyOtp);
+router.post("/resend-otp", resendOtp); 
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password/:token", resetPassword);
+module.exports = router;
