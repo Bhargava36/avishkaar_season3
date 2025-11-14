@@ -426,39 +426,63 @@ const Sparkles = () => {
           // opacity={[0, 1]}         // Fades in
           >
         {/* Tech fest subtitle */}
-        <motion.div
-          className="mt-8 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2, duration: 1 }}
-        >
-          <h2 className="text-2xl md:text-4xl orbitron  text-gray-300 font-mono tracking-wider font-extrabold">
-            SEASON 3
-          </h2>
-          
-          <motion.p 
-            className="text-sm orbitron  my-3 text-gray-300 font-mono tracking-wider  rounded-full px-2 py-1 backdrop-blur-lg"
-            // animate={{
-            //   // opacity: [0.7, 1, 0.7],
-            //   y:[10,0,10]
-            // }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          >
-            {'{ '}
-            <span className="text-cyan-400">INNOVATION</span>
-            {' • '}
-            <span className="text-purple-400 ">TECHNOLOGY</span>
-            {' • '}
-            <span className="text-green-400">FUTURE</span>
-            {' }'}
-          </motion.p>
-          <p className="text-sm py-3 text-white font-bold">Powered By :</p>
-          <img src={gfg} alt="GFG Logo" className="w-32 mx-auto bg-white rounded-lg p-2" />
-        </motion.div>
+       <motion.div
+  className="mt-8 text-center"
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 2, duration: 1 }}
+>
+  <h2 className="text-2xl md:text-4xl orbitron text-gray-300 font-mono tracking-wider font-extrabold">
+    SEASON 3
+  </h2>
+
+  <motion.p
+    className="text-sm orbitron my-3 text-gray-300 font-mono tracking-wider rounded-full px-2 py-1 backdrop-blur-lg"
+    transition={{
+      duration: 3,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }}
+  >
+    {"{ "}
+    <span className="text-cyan-400">INNOVATION</span>
+    {" • "}
+    <span className="text-purple-400">TECHNOLOGY</span>
+    {" • "}
+    <span className="text-green-400">FUTURE</span>
+    {" }"}
+  </motion.p>
+
+  <p className="text-sm py-3 text-white font-bold">Powered By :</p>
+  <img src={gfg} alt="GFG Logo" className="w-32 mx-auto bg-white rounded-lg p-2" />
+
+  {/* Buttons Section */}
+  <div className="mt-6 flex flex-col md:flex-row items-center justify-center gap-4">
+  
+  <a 
+    href="https://unstop.com/hackathons/avishkaar-season-3-virtual-hackathon-a-national-level-innovation-challenge-aditya-institute-of-technology-and-1574485?lb=R8TnBY7f&utm_medium=Share&utm_source=avish20294153&utm_campaign=Online_coding_challenge"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <button className="px-6 py-2 bg-cyan-500 hover:bg-cyan-600 text-white font-mono tracking-wider rounded-full px-2 shadow-md transition-all duration-300">
+      Register for Virtual
+    </button>
+  </a>
+
+  <a 
+    href="https://www.geeksforgeeks.org/hack-a-thon/avishkaar-national-level-hackathon-season-3"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <button className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-mono tracking-wider rounded-full px-2 shadow-md transition-all duration-300">
+      Register for Physical
+    </button>
+  </a>
+
+</div>
+
+</motion.div>
+
           </Parallax>
       </div>
 
