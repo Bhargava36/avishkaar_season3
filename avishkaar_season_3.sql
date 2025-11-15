@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Nov 14, 2025 at 06:18 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Host: 127.0.0.1
+-- Generation Time: Nov 15, 2025 at 09:33 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -119,15 +119,37 @@ INSERT INTO `admin` (`AdminId`, `AdminName`, `email`, `password`, `role`, `verif
 ('BHA-A3-24160', 'Bhargav', 'bhargavanaidujaddu@gmail.com', '$2b$10$RePAoTVcr1yy5zvXQYthPeZFMjKT12vuJdSubxBLd7fTAiWSiAcGi', 'Admin', 1, '2025-10-08 09:06:13'),
 ('KRA-A3-61550', 'kranthi', 'kkk@gmail.com', '$2b$10$U2HOe3a0lgVWJXmIf8ld.OutvxiEW2zleQXJyfCz5Paurgff9QqZK', 'Admin', 1, '2025-09-27 03:52:56'),
 ('KRA-A3-74656', 'kranthi', 'kranthi@gmail.com', '$2b$10$Zz22aVOPgiBOiE/P1AKfJeCBcGn8vJbfK/Qoqrx5Q0BcUUsYDcrK.', 'Admin', 1, '2025-09-25 13:26:35'),
-('PRA-A3-67751', 'prasanth', 'prasanthpadma4@gmail.com', '$2b$10$nw2KX1U5S/mEeZYjmz3kSedFwBV49QA9vOjFW9.JUEciyIEEt.Q4q', 'Admin', 1, '2025-11-01 06:00:56');
+('PRA-A3-43750', 'prasanth', 'prasanthpadma4@gmail.com', '$2b$10$c.ORROGqwYud2w8kYfWkvOsNPDxKr.ah7vdEvw8g4AB5zcrRBZ3cS', 'Admin', 1, '2025-11-15 05:21:12');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Mentors`
+-- Table structure for table `blocks`
 --
 
-CREATE TABLE `Mentors` (
+CREATE TABLE `blocks` (
+  `block_id` varchar(50) NOT NULL,
+  `block_name` varchar(255) NOT NULL,
+  `gender` enum('Male','Female','Mixed') DEFAULT 'Male',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `blocks`
+--
+
+INSERT INTO `blocks` (`block_id`, `block_name`, `gender`, `created_at`) VALUES
+('B001', 'Boys1', 'Male', '2025-11-15 08:22:00'),
+('B002', 'boys2', 'Male', '2025-11-15 08:22:24'),
+('B003', 'girls1', 'Female', '2025-11-15 08:22:52');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mentors`
+--
+
+CREATE TABLE `mentors` (
   `Mentor_Id` varchar(50) NOT NULL,
   `Mentor_Name` varchar(100) NOT NULL,
   `Tech_Stack` varchar(255) NOT NULL,
@@ -136,10 +158,10 @@ CREATE TABLE `Mentors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `Mentors`
+-- Dumping data for table `mentors`
 --
 
-INSERT INTO `Mentors` (`Mentor_Id`, `Mentor_Name`, `Tech_Stack`, `Designation`, `Email`) VALUES
+INSERT INTO `mentors` (`Mentor_Id`, `Mentor_Name`, `Tech_Stack`, `Designation`, `Email`) VALUES
 ('MENTOR_ESWAR_AI&ML', 'eswar', 'AI&ML', 'ass.prof', 'bhargavanaidujaddu@gmail.com'),
 ('MENTOR_GIRISHKUMAR_CYBER_SECURITY', 'Girish Kumar ', 'Cyber_Security', 'Ass.Professor', 'girishkumar@gmail.com');
 
@@ -185,6 +207,31 @@ CREATE TABLE `mentor_requests` (
 
 INSERT INTO `mentor_requests` (`request_id`, `team_id`, `message`, `status`, `created_at`, `updated_at`) VALUES
 ('REQ-BHA-A3-26022-20251110-7153', 'BHA-A3-26022', 'Checking', 'Approved', '2025-11-10 11:39:26', '2025-11-12 11:31:57');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rooms`
+--
+
+CREATE TABLE `rooms` (
+  `room_id` varchar(50) NOT NULL,
+  `block_id` varchar(50) NOT NULL,
+  `room_no` varchar(50) DEFAULT NULL,
+  `capacity` int(11) DEFAULT 0,
+  `occupied` int(11) DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `rooms`
+--
+
+INSERT INTO `rooms` (`room_id`, `block_id`, `room_no`, `capacity`, `occupied`, `created_at`) VALUES
+('R001', 'B001', '102', 4, 0, '2025-11-15 08:22:16'),
+('R002', 'B002', '100', 3, 1, '2025-11-15 08:22:44'),
+('R003', 'B003', '101', 4, 1, '2025-11-15 08:23:32'),
+('R004', 'B002', '110', 5, 1, '2025-11-15 08:28:47');
 
 -- --------------------------------------------------------
 
@@ -300,9 +347,15 @@ ALTER TABLE `admin`
   ADD UNIQUE KEY `Email` (`email`);
 
 --
--- Indexes for table `Mentors`
+-- Indexes for table `blocks`
 --
-ALTER TABLE `Mentors`
+ALTER TABLE `blocks`
+  ADD PRIMARY KEY (`block_id`);
+
+--
+-- Indexes for table `mentors`
+--
+ALTER TABLE `mentors`
   ADD PRIMARY KEY (`Mentor_Id`),
   ADD UNIQUE KEY `Email` (`Email`);
 
@@ -321,6 +374,13 @@ ALTER TABLE `mentor_assignments`
 ALTER TABLE `mentor_requests`
   ADD PRIMARY KEY (`request_id`),
   ADD KEY `team_id` (`team_id`);
+
+--
+-- Indexes for table `rooms`
+--
+ALTER TABLE `rooms`
+  ADD PRIMARY KEY (`room_id`),
+  ADD KEY `block_id` (`block_id`);
 
 --
 -- Indexes for table `teams`
@@ -388,7 +448,7 @@ ALTER TABLE `abstract_submissions`
 -- Constraints for table `mentor_assignments`
 --
 ALTER TABLE `mentor_assignments`
-  ADD CONSTRAINT `mentor_assignments_ibfk_1` FOREIGN KEY (`mentor_id`) REFERENCES `Mentors` (`Mentor_Id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `mentor_assignments_ibfk_1` FOREIGN KEY (`mentor_id`) REFERENCES `mentors` (`Mentor_Id`) ON DELETE CASCADE,
   ADD CONSTRAINT `mentor_assignments_ibfk_2` FOREIGN KEY (`team_id`) REFERENCES `teams` (`teamId`) ON DELETE CASCADE,
   ADD CONSTRAINT `mentor_assignments_ibfk_3` FOREIGN KEY (`assigned_by`) REFERENCES `admin` (`AdminId`) ON DELETE SET NULL;
 
@@ -397,6 +457,12 @@ ALTER TABLE `mentor_assignments`
 --
 ALTER TABLE `mentor_requests`
   ADD CONSTRAINT `mentor_requests_ibfk_1` FOREIGN KEY (`team_id`) REFERENCES `teams` (`teamId`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `rooms`
+--
+ALTER TABLE `rooms`
+  ADD CONSTRAINT `rooms_ibfk_1` FOREIGN KEY (`block_id`) REFERENCES `blocks` (`block_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `team_members`
