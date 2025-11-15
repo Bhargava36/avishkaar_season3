@@ -171,6 +171,7 @@ const AdminDashboard = () => {
     { name: "Themes", icon: <GrServices />, path: "themes" },
     { name: "Team", icon: <RiContactsBookFill />, path: "team" },
     { name: "Registered Teams", icon: <RiContactsBookFill />, path: "registered-teams" },
+    { name: "Accommodation", icon: <BsFillPassportFill />, path: "accommodation" },
 
   ];
 

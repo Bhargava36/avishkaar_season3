@@ -40,6 +40,8 @@ import AdminAbstractOverview from "./Pages/Admin/AdminAbstractOverview";
 import AdminAbstractResults from "./Pages/Admin/AdminAbstractResults";
 import AdminAbstractsList from "./Pages/Admin/AdminAbstractsList";
 import AdminMentorManagement from "./Pages/Admin/AdminMentorManagement";
+import AdminAccommodationManagement from "./Pages/Admin/AdminAccommodationManagement";
+
 function App() {
   const location = useLocation();
 
@@ -91,6 +93,7 @@ function App() {
                   <Route path="important-dates" element={<ImportantDates />} />
                   <Route path="themes" element={<Themes />} />
                   <Route path="team" element={<TeamMembers />} />
+                  <Route path="accommodation" element={<AdminAccommodationManagement />} />
           </Route>
 
           <Route path="/users" element={

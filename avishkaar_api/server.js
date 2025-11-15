@@ -44,6 +44,10 @@ app.use("/api/mentor-assign", mentorAssignmentRoutes);
 
 const mentorRequestRoutes = require("./routes/MentorRequestRoutes");
 app.use("/api/mentor-requests", mentorRequestRoutes);
+
+const adminRoutes = require('./routes/AdminAccommodationRoutes');
+app.use('/api/adminAccommodation', adminRoutes);
+
 // Server Listen
 const PORT = process.env.PORT || 5002;
 app.listen(PORT, () => console.log(`✅ Server running on http://localhost:${PORT}`));
