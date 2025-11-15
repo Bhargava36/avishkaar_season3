@@ -12,11 +12,11 @@ export default function AdminAbstractOverview() {
   const [showFileModal, setShowFileModal] = useState(false);
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [results, setResults] = useState([]);
+  const [currentResult, setCurrentResult] = useState(null);
 
   const API_BASE = "http://localhost:5002/api";
   const API_BASE2 = "http://localhost:5002";
   const API_BASE3 = "http://localhost:5002/api/abstract-results";
-
   useEffect(() => {
       const fetchResults = async () => {
         try {
@@ -51,6 +51,10 @@ export default function AdminAbstractOverview() {
 
         console.log("Fetched Abstract:", result);
         setAbstract(result);
+
+        
+        console.log("All Results:", results);
+        
       } catch (err) {
         console.error("Error fetching abstract:", err);
       } finally {
@@ -119,8 +123,8 @@ const Evaluate = async (status) => {
     setUpdating(false);
   }
 };
-  const currentResult = results.find((r) => r.abstract_id === abstract?.abstract_id);
-  console.log("Current Result for Abstract:", currentResult);
+  
+
   const UpdatedEvaluation = async (newStatus) => {
   if (!currentResult?.result_id) {
     alert("No existing result found for this abstract.");
@@ -176,6 +180,15 @@ const Evaluate = async (status) => {
     setUpdating(false);
   }
 };
+
+// Match result when abstract OR results update
+useEffect(() => {
+  if (abstract && results.length > 0) {
+    const matched = results.find((r) => r.abstract_id === abstract.abstract_id);
+    console.log("Matched Result:", matched);
+    setCurrentResult(matched || null);
+  }
+}, [abstract, results]);
 
   if (loading)
     return <p className="text-center mt-20 text-gray-400 animate-pulse">Loading...</p>;
@@ -303,68 +316,103 @@ const Evaluate = async (status) => {
   <h3 className="text-xl font-semibold text-cyan-600 mb-5">Evaluation</h3>
 
   {/* ✅ Case 1: Abstract already evaluated */}
-  {currentResult.status != null ? (
-    <>
-      <motion.div
-        className={`px-12 py-6 rounded-2xl shadow-lg text-center border text-xl font-semibold ${
-          currentResult.status === "Accepted"
-            ? "bg-green-600/20 border-green-400 text-green-300"
-            : currentResult.status === "Rejected"
-            ? "bg-red-600/20 border-red-400 text-red-300"
-            : "bg-yellow-600/20 border-yellow-400 text-yellow-300"
-        }`}
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 100, damping: 12 }}
-      >
-        <p className="text-3xl font-bold mb-2">
-          {currentResult.status === "Accepted"
-            ? "✅ QUALIFIED"
-            : currentResult.status === "Rejected"
-            ? "❌ REJECTED"
-            : "⏳ ON REVIEW"}
-        </p>
-        <p className="text-sm text-gray-300">
-          Evaluated by:{" "}
-          <span className="text-cyan-400">{currentResult.evaluated_by_name}</span>
-        </p>
-        <p className="text-sm text-gray-400 mt-1">
-          On:{" "}
-          {currentResult.evaluated_at
-            ? new Date(currentResult.evaluated_at).toLocaleString()
-            : "Not recorded"}
-        </p>
-      </motion.div>
+  <div className="p-6 bg-slate-950 rounded-3xl border border-cyan-400/20 text-center">
+  <h3 className="text-xl font-semibold text-cyan-600 mb-5">Evaluation</h3>
 
-      {/* ✅ Case 1.1: If status is null / empty / On Review → show buttons */}
-      {(!currentResult.status ||
-        currentResult.status === "On Review" ||
-        currentResult.status.trim() === "") && (
-        <div className="flex justify-center gap-4 mt-6">
-          {["Accepted", "Rejected", "On Review"].map((s) => (
+  {/* Case 1: There is a result */}
+  {currentResult ? (
+    <>
+      {/* Case 1.1: Show evaluation card */}
+      {currentResult.status != null ? (
+        <>
+          <motion.div
+            className={`px-12 py-6 rounded-2xl shadow-lg text-center border text-xl font-semibold ${
+              currentResult.status === "Accepted"
+                ? "bg-green-600/20 border-green-400 text-green-300"
+                : currentResult.status === "Rejected"
+                ? "bg-red-600/20 border-red-400 text-red-300"
+                : "bg-yellow-600/20 border-yellow-400 text-yellow-300"
+            }`}
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 100, damping: 12 }}
+          >
+            <p className="text-3xl font-bold mb-2">
+              {currentResult.status === "Accepted"
+                ? "✅ QUALIFIED"
+                : currentResult.status === "Rejected"
+                ? "❌ REJECTED"
+                : "⏳ ON REVIEW"}
+            </p>
+
+            <p className="text-sm text-gray-300">
+              Evaluated by:{" "}
+              <span className="text-cyan-400">
+                {currentResult.evaluated_by_name || "Unknown"}
+              </span>
+            </p>
+
+            <p className="text-sm text-gray-400 mt-1">
+              On:{" "}
+              {currentResult.evaluated_at
+                ? new Date(currentResult.evaluated_at).toLocaleString()
+                : "Not recorded"}
+            </p>
+          </motion.div>
+
+          {/* Case 1.2: Show buttons if status is empty / null / On Review */}
+          {(!currentResult.status ||
+            currentResult.status === "On Review" ||
+            currentResult.status.trim() === "") && (
+            <div className="flex justify-center gap-4 mt-6">
+              {["Accepted", "Rejected", "On Review"].map((s) => (
+                <motion.button
+                  key={s}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => UpdatedEvaluation(s)}
+                  disabled={updating}
+                  className={`px-8 py-2 rounded-xl font-semibold transition-all disabled:opacity-60 ${
+                    s === "Accepted"
+                      ? "bg-green-600 hover:bg-green-500"
+                      : s === "Rejected"
+                      ? "bg-red-600 hover:bg-red-500"
+                      : "bg-yellow-500 hover:bg-yellow-400 text-black"
+                  }`}
+                >
+                  {s}
+                </motion.button>
+              ))}
+            </div>
+          )}
+        </>
+      ) : (
+        // If no status available
+        <div className="flex justify-center gap-6">
+          {["Accepted", "Rejected", "On Review"].map((status) => (
             <motion.button
-              key={s}
+              key={status}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => UpdatedEvaluation(s)}
+              onClick={() => UpdatedEvaluation(status)}
               disabled={updating}
-              className={`px-8 py-2 rounded-xl font-semibold transition-all disabled:opacity-60 ${
-                s === "Accepted"
+              className={`px-8 py-3 rounded-xl font-semibold transition-all disabled:opacity-60 ${
+                status === "Accepted"
                   ? "bg-green-600 hover:bg-green-500"
-                  : s === "Rejected"
+                  : status === "Rejected"
                   ? "bg-red-600 hover:bg-red-500"
                   : "bg-yellow-500 hover:bg-yellow-400 text-black"
               }`}
             >
-              {s}
+              {status}
             </motion.button>
           ))}
         </div>
       )}
     </>
   ) : (
-    // ✅ Case 2: No result yet → show buttons (first-time evaluation)
-    <div className="flex flex-wrap justify-center gap-6">
+    // Case 2: No result exists → first time evaluation
+    <div className="flex justify-center gap-6">
       {["Accepted", "Rejected", "On Review"].map((status) => (
         <motion.button
           key={status}
@@ -385,6 +433,8 @@ const Evaluate = async (status) => {
       ))}
     </div>
   )}
+</div>
+
 </div>
 
 
