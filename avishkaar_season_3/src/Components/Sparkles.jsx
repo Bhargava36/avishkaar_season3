@@ -338,11 +338,11 @@ const Sparkles = () => {
         
         {/* Enhanced gradient effects */}
         <Parallax className="w-full  h-40 relative mt-2 md:mt-16 " speed={50}
-          translateY={[-120, 150]} // Moves vertically from -100px to +100px
+          translateY={[-100, 150]} // Moves vertically from -100px to +100px
           // scale={[0.05, 1.2]}       // Scales element
           // opacity={[0, 1]}         // Fades in
           >
-        <div className="w-full h-20 relative mt-8">
+        <div className="w-full h-20 relative mt-12">
           {/* Multiple gradient layers for tech theme */}
           {/* <motion.div 
             className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-blue-600 to-transparent h-[5px] w-8/9"
@@ -427,7 +427,7 @@ const Sparkles = () => {
           >
         {/* Tech fest subtitle */}
        <motion.div
-  className="mt-8 text-center"
+  className="mt-16 text-center"
   initial={{ opacity: 0, y: 20 }}
   animate={{ opacity: 1, y: 0 }}
   transition={{ delay: 2, duration: 1 }}
@@ -437,7 +437,7 @@ const Sparkles = () => {
   </h2>
 
   <motion.p
-    className="text-sm orbitron my-3 text-gray-300 font-mono tracking-wider rounded-full px-2 py-1 backdrop-blur-lg"
+    className="text-sm orbitron mt-3 text-gray-300 font-mono tracking-wider rounded-full px-2 py-1 backdrop-blur-lg"
     transition={{
       duration: 3,
       repeat: Infinity,
@@ -453,8 +453,8 @@ const Sparkles = () => {
     {" }"}
   </motion.p>
 
-  <p className="text-sm py-3 text-white font-bold">Powered By :</p>
-  <img src={gfg} alt="GFG Logo" className="w-32 mx-auto bg-white rounded-lg p-2" />
+  <p className="text-sm py-2 text-white font-bold">Powered By :</p>
+  <img src={gfg} alt="GFG Logo" className="w-25 mx-auto bg-white rounded-lg p-2" />
 
   {/* Buttons Section */}
   <div className="mt-6 flex flex-col md:flex-row items-center justify-center gap-4">
